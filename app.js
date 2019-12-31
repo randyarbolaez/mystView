@@ -106,14 +106,14 @@ passport.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-//Routes
+//Route
 const index = require("./routes/index");
 app.use("/", index);
 const authRoutes = require("./routes/auth-routes");
 app.use("/", authRoutes);
 const reviewRoutes = require("./routes/review-routes");
 app.use("/reviews", reviewRoutes);
-//Routes
+//Route
 
 app.listen(process.env.PORT, () => {
   console.log(`Listening on http://localhost:${process.env.PORT}`);
