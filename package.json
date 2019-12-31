@@ -4,7 +4,7 @@
   "private": true,
   "description": "application for people to get reviewed anonymously with a 6 digit code that they'll receive when they signup for an account",
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "node app.js",
     "dev": "DEBUG=project-5:* nodemon ./bin/www"
   },
   "author": "",
