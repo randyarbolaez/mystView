@@ -1,0 +1,30 @@
+<div class="container-nav">
+  <div class="sub-container-nav">
+    <a href="/">
+      <h1 class="sub-container-title">MystView</h1>
+    </a>
+    <div>
+      <a href="/login">login</a>
+      <a href="/signup">signup</a>
+    </div>
+  </div>
+</div>
+
+<div class="container-index">
+  <form class="container-form" action="/reviews/create" method="POST">
+    <div>
+
+      <div>
+        <input id="user" type="text" class="container-form-input" name="code" placeholder="Enter 6 digit Number">
+      </div>
+      <div>
+        <textarea class="container-form-input" name="review" maxlength="150"
+          placeholder="Your review is anonymous"></textarea>
+      </div>
+      <div>
+        <input type="submit" class="container-form-button" value="Add Review">
+      </div>
+
+    </div>
+  </form>
+</div>

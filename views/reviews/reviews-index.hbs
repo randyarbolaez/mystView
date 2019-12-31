@@ -1,0 +1,27 @@
+<div class="container-nav">
+  <div class="sub-container-nav">
+    <a href="/">
+      <h1 class="sub-container-title">MystView</h1>
+    </a>
+    <div>
+      <a href="/logout">Logout</a>
+    </div>
+  </div>
+</div>
+
+
+<div>
+  <div>
+    {{#each Reviews}}
+    <div class="container-index">
+      <div class="container-form">
+        <div>
+          <h3 class="review-date">{{this.date}}</h3>
+          <hr>
+          <h2 class="review-review">{{this.review}}</h2>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>

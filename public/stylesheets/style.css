@@ -1,0 +1,95 @@
+body {
+  margin: 0 auto;
+  font-family: "Lato", sans-serif;
+  background-color: #ffdfd3;
+}
+
+a {
+  text-decoration: none;
+  color: #b4bad4;
+  padding: 0 1vw;
+  font-size: 2vmax;
+  text-transform: capitalize;
+}
+
+a:hover {
+  color: #fff;
+}
+
+.container-nav {
+  background-color: #fec8d8;
+  color: #b4bad4;
+}
+
+.sub-container-nav {
+  display: flex;
+  margin: 0 5vw;
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+}
+
+.sub-container-title {
+  padding-left: 2vw;
+  font-size: 3vmax;
+}
+
+/* FORM CSS */
+
+.container-index {
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-form {
+  background-color: #ffdfd3;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  padding: 10vh 10vw;
+  border-radius: 5%;
+  margin-bottom: 10vh;
+}
+
+.container-form-input {
+  font-family: "Lato", sans-serif;
+  background: none;
+  border-radius: 10%;
+  padding: 1vmax;
+  border: none;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin-bottom: 1.5vh;
+}
+
+.container-form-button {
+  font-family: "Lato", sans-serif;
+  border: none;
+  border-radius: 5%;
+  font-size: 1.3vmax;
+  background: none;
+  color: #b4bad4;
+}
+
+.container-form-button:hover {
+  color: #fff;
+}
+
+/* FORM CSS */
+
+/* REVIEW CSS */
+.review-date {
+  color: #ccc;
+  border: 1px solid #fff9ed;
+  border-bottom: none;
+  padding: 1vmax;
+}
+
+.review-review {
+  text-align: center;
+  border: 1px solid #fff9ed;
+  border-top: none;
+  padding: 1vmax;
+  width: 20vmax;
+}
+/* REVIEW CSS */
