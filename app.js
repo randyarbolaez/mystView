@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config({ path: "./env" });
 
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -20,8 +20,7 @@ const User = require("./models/user-schema");
 mongoose.Promise = Promise;
 mongoose
   .connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+    useNewUrlParser: true
   })
   .then(() => {
     console.log("Connected to Mongo!");
