@@ -19,9 +19,7 @@ const User = require("./models/user-schema");
 // DB Setup
 mongoose.Promise = Promise;
 mongoose
-  .connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true
-  })
+  .connect(process.env.MONGODB_URI, { useNewUrlParser: true })
   .then(() => {
     console.log("Connected to Mongo!");
   })
