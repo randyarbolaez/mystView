@@ -1,7 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
-var moment = require("moment");
+const moment = require("moment");
+
+// sentiment analysis
+const Sentiment = require("sentiment");
+const sentiment = new Sentiment();
+// sentiment analysis
 
 const User = require("../models/user-schema");
 const Review = require("../models/review-schema");
@@ -21,7 +26,6 @@ router.get("/", ensureAuthenticated, (req, res, next) => {
     if (err) {
       return next(err);
     }
-    console.log(myReviews, "myReviews");
     res.render("reviews/reviews-index", { Reviews: myReviews });
   });
 });
@@ -31,19 +35,26 @@ router.post("/create", (req, res, next) => {
   const newReview = new Review({
     date: moment().format("dddd, MMMM Do YYYY"),
     review: req.body.review,
-    code: req.body.code
+    code: req.body.code,
+    sentimentScore: sentiment.analyze(req.body.review).score,
+    sentimentReview:
+      sentiment.analyze(req.body.review).score > 3
+        ? "good"
+        : sentiment.analyze(req.body.review).score < 0
+        ? "bad"
+        : "neutral",
   });
   User.find((err, allUsers) => {
     if (err) {
       return next(err);
     }
-    let everyCode = allUsers.map(review => {
+    let everyCode = allUsers.map((review) => {
       return review.code;
     });
-    let validCode = everyCode.filter(code => code == newReview.code);
+    let validCode = everyCode.filter((code) => code == newReview.code);
 
     if (!!validCode.length) {
-      newReview.save(err => {
+      newReview.save((err) => {
         if (err) {
           return next(err);
         } else {

@@ -5,7 +5,7 @@
   "description": "application for people to get reviewed anonymously with a 6 digit code that they'll receive when they signup for an account",
   "scripts": {
     "start": "node app.js",
-    "dev": "DEBUG=project-5:* nodemon ./bin/www"
+    "dev": "nodemon app.js"
   },
   "author": "",
   "license": "ISC",
@@ -26,6 +26,7 @@
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
+    "sentiment": "^5.0.2",
     "serve-favicon": "^2.5.0"
   }
 }

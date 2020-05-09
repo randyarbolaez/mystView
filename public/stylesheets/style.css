@@ -60,6 +60,7 @@ a:hover {
   border: none;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   margin-bottom: 1.5vh;
+  resize: none;
 }
 
 .container-form-button {
@@ -92,4 +93,22 @@ a:hover {
   padding: 1vmax;
   width: 20vmax;
 }
+
+/* All sentimentReview */
+
+/* Good sentimentReview */
+.good {
+  border-color: #00cf91;
+}
+/* Good sentimentReview */
+
+.neutral {
+  border-color: #ffad32;
+}
+
+.bad {
+  border-color: #f85c50;
+}
+
+/* All sentimentReview */
 /* REVIEW CSS */
