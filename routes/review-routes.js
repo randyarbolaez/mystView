@@ -8,6 +8,10 @@ const Sentiment = require("sentiment");
 const sentiment = new Sentiment();
 // sentiment analysis
 
+const Words = require("../util/words-and-their-value")
+
+console.log('hello',typeof Words['nasty']);
+
 const User = require("../models/user-schema");
 const Review = require("../models/review-schema");
 
@@ -32,6 +36,7 @@ router.get("/", ensureAuthenticated, (req, res, next) => {
 
 //CREATE ENTRY
 router.post("/create", (req, res, next) => {
+  console.log('hello')
   const newReview = new Review({
     date: moment().format("dddd, MMMM Do YYYY"),
     review: req.body.review,

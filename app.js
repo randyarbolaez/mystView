@@ -16,6 +16,7 @@ const LocalStrategy = require("passport-local").Strategy;
 
 const User = require("./models/user-schema");
 
+
 // DB Setup
 mongoose.Promise = Promise;
 mongoose
