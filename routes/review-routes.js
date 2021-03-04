@@ -8,9 +8,9 @@ const Sentiment = require("sentiment");
 const sentiment = new Sentiment();
 // sentiment analysis
 
-const Words = require("../util/words-and-their-value")
+const SentimentAnalysis = require("../util/sentiment-analysis")
 
-console.log('hello',typeof Words['nasty']);
+console.log('hello',SentimentAnalysis('8248324 stupid sdfjhfsjhf rnady RNAYDYu sfdkjsf438934 !@323&'));
 
 const User = require("../models/user-schema");
 const Review = require("../models/review-schema");
