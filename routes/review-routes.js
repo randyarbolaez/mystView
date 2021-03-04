@@ -4,13 +4,11 @@ const passport = require("passport");
 const moment = require("moment");
 
 // sentiment analysis
-const Sentiment = require("sentiment");
-const sentiment = new Sentiment();
+//const Sentiment = require("sentiment");
+//const sentiment = new Sentiment();
 // sentiment analysis
 
 const SentimentAnalysis = require("../util/sentiment-analysis")
-
-console.log('hello',SentimentAnalysis('8248324 stupid sdfjhfsjhf rnady RNAYDYu sfdkjsf438934 !@323&'));
 
 const User = require("../models/user-schema");
 const Review = require("../models/review-schema");
@@ -36,16 +34,15 @@ router.get("/", ensureAuthenticated, (req, res, next) => {
 
 //CREATE ENTRY
 router.post("/create", (req, res, next) => {
-  console.log('hello')
   const newReview = new Review({
     date: moment().format("dddd, MMMM Do YYYY"),
     review: req.body.review,
     code: req.body.code,
-    sentimentScore: sentiment.analyze(req.body.review).score,
+    sentimentScore: SentimentAnalysis(req.body.review),
     sentimentReview:
-      sentiment.analyze(req.body.review).score > 3
+      SentimentAnalysis(req.body.review) >= 6
         ? "good"
-        : sentiment.analyze(req.body.review).score < 0
+        : SentimentAnalysis(req.body.review) <= 0
         ? "bad"
         : "neutral",
   });

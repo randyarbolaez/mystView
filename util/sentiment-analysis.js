@@ -5,13 +5,14 @@ const formatString = (str) => (str.match(/[^_\W^\d]+/g).join(' ').toLowerCase().
 const sentimentAnalysis = (str) => {
   let score = 0;
   let formattedString = formatString(str);
-
   for(let i = 0;i< formattedString.length;i++){
-    if(Words[formattedString[i]] == undefined){
+
+    if(!Words[formattedString[i]]){
       score += 0;
     }else{
       score += Words[formattedString[i]];
     }
+
   }
   return score;
 };
