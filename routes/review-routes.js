@@ -42,7 +42,7 @@ router.post("/create", (req, res, next) => {
     sentimentReview:
       SentimentAnalysis(req.body.review) >= 6
         ? "good"
-        : SentimentAnalysis(req.body.review) <= 0
+        : SentimentAnalysis(req.body.review) < 0
         ? "bad"
         : "neutral",
   });
