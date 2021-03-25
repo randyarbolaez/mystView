@@ -3,11 +3,6 @@ const router = express.Router();
 const passport = require("passport");
 const moment = require("moment");
 
-// sentiment analysis
-//const Sentiment = require("sentiment");
-//const sentiment = new Sentiment();
-// sentiment analysis
-
 const SentimentAnalysis = require("../util/sentiment-analysis")
 
 const User = require("../models/user-schema");
