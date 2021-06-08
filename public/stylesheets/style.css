@@ -29,6 +29,20 @@ a:hover {
   align-items: center;
 }
 
+.sub-container-nav-right{
+  display: flex;
+  align-items: center;
+}
+
+.sub-container-nav-right-code {
+  color:#f5f6f9;
+  font-size: 1.7vmax;
+  font-size: 1.9vmax;
+  transition: color 0.5s ease-in-out;
+  cursor: default;
+}
+
+
 .sub-container-title {
   padding-left: 2vw;
   font-size: 3vmax;
@@ -74,6 +88,7 @@ a:hover {
 
 .container-form-button:hover {
   color: #fff;
+  cursor: pointer;
 }
 
 /* FORM CSS */

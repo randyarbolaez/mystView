@@ -3,7 +3,7 @@ const router = express.Router();
 const passport = require("passport");
 const moment = require("moment");
 
-const SentimentAnalysis = require("../util/sentiment-analysis")
+const SentimentAnalysis = require("../util/sentiment-analysis");
 
 const User = require("../models/user-schema");
 const Review = require("../models/review-schema");
@@ -23,7 +23,7 @@ router.get("/", ensureAuthenticated, (req, res, next) => {
     if (err) {
       return next(err);
     }
-    res.render("reviews/reviews-index", { Reviews: myReviews });
+    res.render("reviews/reviews-index", { Reviews: myReviews, User: req.user });
   });
 });
 
