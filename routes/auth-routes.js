@@ -31,14 +31,19 @@ router.post("/signup", (req, res, next) => {
     const newUser = User({
       username,
       password: hashPass,
-      code
+      code,
     });
 
-    newUser.save(err => {
+    newUser.save((err) => {
       if (err) {
         res.render("auth/signup");
       } else {
-        res.redirect("/login");
+        req.logIn(newUser, (err) => {
+          if (err) {
+            return next(err);
+          }
+          return res.redirect("/reviews");
+        });
       }
     });
   });
@@ -54,7 +59,7 @@ router.post(
     successRedirect: "/reviews",
     failureRedirect: "/login",
     failureFlash: true,
-    passReqToCallback: false
+    passReqToCallback: false,
   })
 );
 

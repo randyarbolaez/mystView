@@ -15,12 +15,12 @@
     <div>
 
       <div>
-        <input minlength="6" id="user" type="text" class="container-form-input" name="code"
-          placeholder="Enter 6 digit key" maxlength="6">
+        <input minLength="6" maxLength="6" pattern="[0-9]+" id="user" type="text" class="container-form-input" name="code"
+          placeholder="Enter 6 digit key" required title="Only numbers :)">
       </div>
       <div>
         <textarea class="container-form-input" name="review" maxlength="150" rows="5" cols="30"
-          placeholder="Your review is anonymous"></textarea>
+          placeholder="Your review is anonymous" required></textarea>
       </div>
       <div>
         <input type="submit" class="container-form-button" value="Add Review">

@@ -15,16 +15,16 @@
     <form action="/signup" method="POST" class="container-form">
       <h1>Sign Up</h1>
       <div>
-        <input type="text" name="username" placeholder="What's your username?" autofocus="autofocus" required="required"
+        <input type="text" name="username" placeholder="What's your username?" autofocus="autofocus" required
           class="container-form-input" />
       </div>
       <div>
-        <input type="password" name="password" placeholder="Choose a password" required="required"
+        <input type="password" name="password" placeholder="Choose a password" required
           class="container-form-input" />
       </div>
       <div>
-        <input type="code" name="code" placeholder="enter a 6 digit code" required="required"
-          class="container-form-input" />
+        <input type="code" name="code" placeholder="enter a 6 digit code" 
+          class="container-form-input" minlength="6" maxlength="6" pattern="[0-9]+" required title="Only numbers :)"/>
       </div>
       <input type="submit" value="Sign up!" class="container-form-button" />
     </form>
