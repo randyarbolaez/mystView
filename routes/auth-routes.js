@@ -8,7 +8,7 @@ const bcryptSalt = 10;
 const passport = require("passport");
 
 router.get("/signup", (req, res, next) => {
-  res.render("auth/signup");
+  res.render("auth/signup", { User: req.user });
 });
 
 router.post("/signup", (req, res, next) => {
@@ -49,15 +49,15 @@ router.post("/signup", (req, res, next) => {
   });
 });
 
-router.get("/login", (req, res, next) => {
-  res.render("auth/login");
+router.get("/signin", (req, res, next) => {
+  res.render("auth/signin", { User: req.user });
 });
 
 router.post(
-  "/login",
+  "/signin",
   passport.authenticate("local", {
     successRedirect: "/reviews",
-    failureRedirect: "/login",
+    failureRedirect: "/signin",
     failureFlash: true,
     passReqToCallback: false,
   })

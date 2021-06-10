@@ -3,9 +3,14 @@
     <a href="/">
       <h1 class="sub-container-title">MystView</h1>
     </a>
-    <div>
-      <a href="/login">login</a>
-      <a href="/signup">signup</a>
+    <div class="sub-container-nav-right">
+      {{#if User}}
+        <h2 class="sub-container-nav-right-code">{{User.code}}</h2>
+        <a href="/logout">Logout</a>
+      {{else}}
+        <a href="/signin">signin</a>
+        <a href="/signup">signup</a>
+      {{/if}}
     </div>
   </div>
 </div>

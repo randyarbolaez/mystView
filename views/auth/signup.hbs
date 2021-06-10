@@ -3,31 +3,39 @@
     <a href="/">
       <h1 class="sub-container-title">MystView</h1>
     </a>
-    <div>
-      <a href="/login">login</a>
+    <div class="sub-container-nav-right">
+      {{#if User}}
+        <h2 class="sub-container-nav-right-code">{{User.code}}</h2>
+        <a href="/logout">Logout</a>
+      {{else}}
+        <a href="/signin">signin</a>
+        <a href="/signup">signup</a>
+      {{/if}}
     </div>
   </div>
 </div>
 
 <div class="container-index">
   <div id="logbox">
-
-    <form action="/signup" method="POST" class="container-form">
-      <h1>Sign Up</h1>
-      <div>
-        <input type="text" name="username" placeholder="What's your username?" autofocus="autofocus" required
-          class="container-form-input" />
-      </div>
-      <div>
-        <input type="password" name="password" placeholder="Choose a password" required
-          class="container-form-input" />
-      </div>
-      <div>
-        <input type="code" name="code" placeholder="enter a 6 digit code" 
-          class="container-form-input" minlength="6" maxlength="6" pattern="[0-9]+" required title="Only numbers :)"/>
-      </div>
-      <input type="submit" value="Sign up!" class="container-form-button" />
-    </form>
-
+    {{#if User}}
+      <h1>Already signed in</h1>
+    {{else}}
+      <form action="/signup" method="POST" class="container-form">
+        <h1>Sign Up</h1>
+        <div>
+          <input type="text" name="username" placeholder="What's your username?" autofocus="autofocus" required
+            class="container-form-input" />
+        </div>
+        <div>
+          <input type="password" name="password" placeholder="Choose a password" required
+            class="container-form-input" />
+        </div>
+        <div>
+          <input type="code" name="code" placeholder="enter a 6 digit code" 
+            class="container-form-input" minlength="6" maxlength="6" pattern="[0-9]+" required title="Only numbers :)"/>
+        </div>
+        <input type="submit" value="Sign up!" class="container-form-button" />
+      </form>
+    {{/if}}
   </div>
 </div>
