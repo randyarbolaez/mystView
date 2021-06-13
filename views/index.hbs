@@ -19,13 +19,16 @@
   <form class="container-form" action="/reviews/create" method="POST">
     <div>
 
+      {{#if ErrorText}}
+        <span class="error-wrong-code">{{ErrorText}}</span>
+      {{/if}}
       <div>
         <input minLength="6" maxLength="6" pattern="[0-9]+" id="user" type="text" class="container-form-input" name="code"
-          placeholder="Enter 6 digit key" required title="Only numbers :)">
+          placeholder="Enter 6 digit key" required title="Only numbers :)" value={{Code}}>
       </div>
       <div>
         <textarea class="container-form-input" name="review" maxlength="150" rows="5" cols="30"
-          placeholder="Your review is anonymous" required></textarea>
+          placeholder="Your review is anonymous" required>{{Review}}</textarea>
       </div>
       <div>
         <input type="submit" class="container-form-button" value="Add Review">

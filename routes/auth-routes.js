@@ -12,7 +12,7 @@ router.get("/signup", (req, res, next) => {
 });
 
 router.post("/signup", (req, res, next) => {
-  const username = req.body.username;
+  const username = req.body.username.toLowerCase();
   const password = req.body.password;
   const code = req.body.code;
   if (username === "" || password === "") {
@@ -21,7 +21,10 @@ router.post("/signup", (req, res, next) => {
   }
   User.findOne({ username: username }, "username", (err, user) => {
     if (user !== null) {
-      res.render("auth/signup");
+      res.render("auth/signup", {
+        ErrorText: "Username is taken",
+        Username: username,
+      });
       return;
     }
 
@@ -53,15 +56,36 @@ router.get("/signin", (req, res, next) => {
   res.render("auth/signin", { User: req.user });
 });
 
-router.post(
-  "/signin",
-  passport.authenticate("local", {
-    successRedirect: "/reviews",
-    failureRedirect: "/signin",
-    failureFlash: true,
-    passReqToCallback: false,
-  })
-);
+// router.post(
+//   "/signin",
+//   passport.authenticate("local", {
+//     successRedirect: "/reviews",
+//     failureRedirect: "/signin",
+//     failureFlash: false,
+//     passReqToCallback: false,
+//   })
+// );
+
+router.post("/signin", (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      console.log(info);
+      return res.render("auth/signin", {
+        ErrorText: info.message,
+        Username: req.body.username,
+      });
+    }
+    req.logIn(user, function (err) {
+      if (err) {
+        return next(err);
+      }
+      return res.redirect("/reviews");
+    });
+  })(req, res, next);
+});
 
 router.get("/logout", (req, res) => {
   req.logout();

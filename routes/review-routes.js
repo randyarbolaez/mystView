@@ -59,7 +59,11 @@ router.post("/create", (req, res, next) => {
         }
       });
     } else {
-      res.render("error-code");
+      res.render("index", {
+        ErrorText: "Wrong Code",
+        Code: newReview.code,
+        Review: newReview.review,
+      });
     }
   });
 });
