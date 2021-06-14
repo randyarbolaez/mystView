@@ -56,16 +56,6 @@ router.get("/signin", (req, res, next) => {
   res.render("auth/signin", { User: req.user });
 });
 
-// router.post(
-//   "/signin",
-//   passport.authenticate("local", {
-//     successRedirect: "/reviews",
-//     failureRedirect: "/signin",
-//     failureFlash: false,
-//     passReqToCallback: false,
-//   })
-// );
-
 router.post("/signin", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) {

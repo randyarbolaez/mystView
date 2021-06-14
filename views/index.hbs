@@ -5,7 +5,11 @@
     </a>
     <div class="sub-container-nav-right">
       {{#if User}}
-        <h2 class="sub-container-nav-right-code">{{User.code}}</h2>
+        <h2 class="sub-container-nav-right-code">
+          <a class="sub-container-nav-right-code-link" href="/reviews">
+            {{User.code}}
+          </a>
+        </h2>
         <a href="/logout">Logout</a>
       {{else}}
         <a href="/signin">signin</a>
