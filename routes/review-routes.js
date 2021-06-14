@@ -17,7 +17,6 @@ function ensureAuthenticated(req, res, next) {
   }
 }
 
-//MAKE SURE USER IS LOGGED IN
 router.get("/", ensureAuthenticated, (req, res, next) => {
   Review.find({ code: req.user.code }, (err, myReviews) => {
     if (err) {

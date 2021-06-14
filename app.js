@@ -27,9 +27,9 @@ app.use(express.json());
 
 app.use(
   session({
-    secret: "our-passport-local-strategy-app",
+    secret: process.env.SESSION_SECRET,
     resave: true,
-    saveUninitialized: true,
+    saveUninitialized: false,
   })
 );
 
