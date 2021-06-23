@@ -142,3 +142,30 @@ a:hover {
   color:#ff6961;
 }
 /* ERROR CSS*/
+
+
+.help-icon {
+  display: block;
+  color: #7A6174;
+  position: absolute;
+  bottom: 1.5%;
+  right: 2%;
+  font-size: 3em;
+}
+
+.help-icon:hover {
+  cursor: default;
+}
+
+.hide {
+  display: none;
+}
+
+.help-icon:hover+.hide {
+  display: block;
+  color: #7A6174;
+  position: absolute;
+  bottom: 10%;
+  right: 2%;
+  width:10%;
+}
