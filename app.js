@@ -8,6 +8,15 @@ const path = require("path");
 const session = require("express-session");
 const passport = require("passport");
 
+const UserCode = require("./util/user-code");
+
+let blahFunc = async () => {
+  let blah = await UserCode();
+  console.log("><><><><><><><><>", blah);
+};
+
+blahFunc();
+
 // DB Setup
 mongoose.Promise = Promise;
 mongoose
