@@ -5,31 +5,19 @@ const generateRandomSixDigitCode = () => {
 };
 
 const getUserCode = async () => {
-  // 438192
-  //   User.findOne({ code: "438192" }, (err, user) => {
-  //     console.log(user);
-  //   });
-  let result = await User.findOne(
-    // { code: generateRandomSixDigitCode() },
-    { code: "438192" },
-    (err, user) => {
-      if (user) {
-        return null;
-      } else {
-        return user;
-      }
+  let userCode = generateRandomSixDigitCode();
+  let result = await User.findOne({ code: userCode }, (err, user) => {
+    if (user) {
+      return null;
+    } else {
+      return user;
     }
-  );
-  //   console.log("generateRandomSixDigitCode", {
-  //     userWithCode,
-  //     generateRandomSixDigitCode: generateRandomSixDigitCode(),
-  //   });
-  //   let userWithCode = findUserWithCode.then((user) => {
-  //     return user;
-  //   });
-  //   let userWithCode = await findUserWithCode();
-  //   await findUserWithCode();
-  return result;
+  });
+  if (result == null) {
+    return userCode;
+  } else {
+    getUserCode();
+  }
 };
 
 module.exports = getUserCode;

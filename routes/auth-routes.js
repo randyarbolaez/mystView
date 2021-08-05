@@ -12,10 +12,12 @@ router.get("/signup", (req, res, next) => {
   res.render("auth/signup", { User: req.user });
 });
 
-router.post("/signup", (req, res, next) => {
+router.post("/signup", async (req, res, next) => {
   const username = req.body.username.toLowerCase();
   const password = req.body.password;
-  const code = req.body.code;
+  // const code = req.body.code;
+  const code = await UserCode();
+  console.log(code, "CODE AUTH-ROUTES.JS");
   if (username === "" || password === "") {
     res.render("auth/signup");
     return;
