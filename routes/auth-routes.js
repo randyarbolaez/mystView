@@ -9,7 +9,7 @@ const bcryptSalt = 10;
 const passport = require("passport");
 
 router.get("/signup", (req, res, next) => {
-  res.render("auth/signup", { User: req.user });
+  res.render("auth/authentication", { User: req.user, isSignin: false });
 });
 
 router.post("/signup", async (req, res, next) => {
@@ -19,14 +19,17 @@ router.post("/signup", async (req, res, next) => {
   const code = await UserCode();
   console.log(code, "CODE AUTH-ROUTES.JS");
   if (username === "" || password === "") {
-    res.render("auth/signup");
+    // res.render("auth/signup", { isSignin: false });
+    res.render("auth/authentication", { isSignin: false });
     return;
   }
   User.findOne({ username: username }, "username", (err, user) => {
     if (user !== null) {
-      res.render("auth/signup", {
+      // res.render("auth/signup", {
+      res.render("auth/authentication", {
         ErrorText: "Username is taken",
         Username: username,
+        isSignin: false,
       });
       return;
     }
@@ -42,7 +45,8 @@ router.post("/signup", async (req, res, next) => {
 
     newUser.save((err) => {
       if (err) {
-        res.render("auth/signup");
+        // res.render("auth/signup", { isSignin: false });
+        res.render("auth/authentication", { isSignin: false });
       } else {
         req.logIn(newUser, (err) => {
           if (err) {
@@ -56,7 +60,8 @@ router.post("/signup", async (req, res, next) => {
 });
 
 router.get("/signin", (req, res, next) => {
-  res.render("auth/signin", { User: req.user });
+  // res.render("auth/signin", { User: req.user, showSignIn: true });
+  res.render("auth/authentication", { User: req.user, isSignin: true });
 });
 
 router.post("/signin", (req, res, next) => {
@@ -66,9 +71,11 @@ router.post("/signin", (req, res, next) => {
     }
     if (!user) {
       console.log(info);
-      return res.render("auth/signin", {
+      // return res.render("auth/signin", {
+      return res.render("auth/authentication", {
         ErrorText: info.message,
         Username: req.body.username,
+        isSignin: true,
       });
     }
     req.logIn(user, function (err) {
