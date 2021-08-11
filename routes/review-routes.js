@@ -5,6 +5,8 @@ const moment = require("moment");
 
 const SentimentAnalysis = require("../util/sentiment-analysis");
 
+const QRCode = require("qrcode");
+
 const User = require("../models/user-schema");
 const Review = require("../models/review-schema");
 
@@ -22,7 +24,17 @@ router.get("/", ensureAuthenticated, (req, res, next) => {
     if (err) {
       return next(err);
     }
-    res.render("reviews/reviews-index", { Reviews: myReviews, User: req.user });
+    QRCode.toDataURL(
+      `http://mystview.herokuapp.com/?reviewCode=${req.user.code}`,
+      { type: "terminal" },
+      function (err, url) {
+        res.render("reviews/reviews-index", {
+          Reviews: myReviews,
+          User: req.user,
+          qrCodeURL: url,
+        });
+      }
+    );
   });
 });
 
