@@ -136,14 +136,19 @@ a:hover {
 /* All sentimentReview */
 /* REVIEW CSS */
 
+/* QR CODE*/
+.qr-code{
+  width: 30vmax
+}
+/* QR CODE*/
 
-/* ERROR CSS*/
+/* ERROR CSS */
 .error-wrong-code{
   color:#ff6961;
 }
-/* ERROR CSS*/
+/* ERROR CSS */
 
-
+/* HELP ICON */
 .help-icon {
   display: block;
   color: #7A6174;
@@ -169,3 +174,4 @@ a:hover {
   right: 2%;
   width:10%;
 }
+/* HELP ICON */
