@@ -84,7 +84,6 @@ a:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   margin-bottom: 1.5vh;
   resize: none;
-  border-top: 1px solid black;
   border-bottom: 1px solid black;
 }
 
