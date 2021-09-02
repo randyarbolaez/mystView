@@ -16,6 +16,7 @@ router.post("/signup", async (req, res, next) => {
   const username = req.body.username.toLowerCase();
   const password = req.body.password;
   const code = await UserCode();
+  const throwaway = await UserCode();
   if (username === "" || password === "") {
     res.render("auth/authentication", { isSignin: false });
     return;
@@ -37,6 +38,7 @@ router.post("/signup", async (req, res, next) => {
       username,
       password: hashPass,
       code,
+      throwaway,
     });
 
     newUser.save((err) => {
@@ -51,6 +53,18 @@ router.post("/signup", async (req, res, next) => {
         });
       }
     });
+
+    setTimeout(
+      async () =>
+        User.findOneAndUpdate(
+          { username },
+          { throwaway: null },
+          {
+            new: true,
+          }
+        ),
+      60000
+    );
   });
 });
 

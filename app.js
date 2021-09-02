@@ -11,7 +11,11 @@ const passport = require("passport");
 // DB Setup
 mongoose.Promise = Promise;
 mongoose
-  .connect(process.env.MONGODB_URI, { useNewUrlParser: true })
+  .connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     console.log("Connected to Mongo!");
   })
