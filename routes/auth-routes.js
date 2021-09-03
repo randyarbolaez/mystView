@@ -12,6 +12,19 @@ router.get("/signup", (req, res, next) => {
   res.render("auth/authentication", { User: req.user, isSignin: false });
 });
 
+router.post("/send-email", async (req, res, next) => {
+  let ifUserCameFromSignin =
+    req.headers.referer.split("/")[req.headers.referer.split("/").length - 1] ==
+    "signin"
+      ? true
+      : false;
+
+  res.render("auth/authentication", {
+    Username: req.body.username,
+    isSignin: ifUserCameFromSignin,
+  });
+});
+
 router.post("/signup", async (req, res, next) => {
   const username = req.body.username.toLowerCase();
   const password = req.body.password;

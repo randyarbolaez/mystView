@@ -27,30 +27,45 @@
         {{#if User}}
             <h1>Already signed in</h1>
         {{else}}
-            {{#if isSignin}}
-                <form method="POST" action="/signin" class="container-form">
-                    <h1>Sign In</h1>
-            {{else}}
-                <form action="/signup" method="POST" class="container-form">
-                    <h1>Sign Up</h1>
-            {{/if}}
-                    {{#if ErrorText}}
-                        <span class="error-wrong-code">{{ErrorText}}</span>
-                    {{/if}}
-                    <div>
-                        <input type="text" name="username" placeholder="enter your username" class="container-form-input"
-                            value={{Username}}>
-                    </div>
-                    <input type="password" name="password" placeholder="enter your password" required="required"
-                        class="container-form-input">
-                    <div>
-                        {{#if isSignin}}
-                            <input type="submit" value="Sign In!" class="container-form-button">
-                        {{else}}
-                            <input type="submit" value="Sign Up!" class="container-form-button">
+            {{#if Username}}
+                {{#if isSignin}}
+                    <form method="POST" action="/signin" class="container-form">
+                        <h1>Sign In</h1>
+                {{else}}
+                    <form action="/signup" method="POST" class="container-form">
+                        <h1>Sign Up</h1>
+                {{/if}}
+                        {{#if ErrorText}}
+                            <span class="error-wrong-code">{{ErrorText}}</span>
                         {{/if}}
+                        <div>
+                            <input type="text" name="username" placeholder="enter your username" class="container-form-input"
+                                value={{Username}}>
+                        </div>
+                        <input type="password" name="password" placeholder="enter your password" required="required"
+                            class="container-form-input">
+                        <div>
+                            {{#if isSignin}}
+                                <input type="submit" value="Sign In!" class="container-form-button">
+                            {{else}}
+                                <input type="submit" value="Sign Up!" class="container-form-button">
+                            {{/if}}
+                        </div>
+                    </form> 
+            {{else}}
+                <form method="POST" action="/send-email" class="container-form">
+                {{#if isSignin}}
+                    <h1>Sign In</h1>
+                {{else}}
+                    <h1>Sign Up</h1>
+                {{/if}}
+                    <input type="text" name="username" placeholder="enter your username" class="container-form-input"
+                        required="required" value={{Username}}>
+                    <div>
+                        <input type="submit" value="Submit!" class="container-form-button">
                     </div>
-                </form> 
+                </form>
+            {{/if}}
         {{/if}}
     </div>
 </div>
