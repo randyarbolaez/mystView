@@ -19,6 +19,30 @@ router.post("/send-email", async (req, res, next) => {
       ? true
       : false;
 
+  let password = "123456";
+  const salt = bcrypt.genSaltSync(bcryptSalt);
+  const hashPass = bcrypt.hashSync(password, salt);
+
+  await User.findOneAndUpdate(
+    { username: req.body.username },
+    { password: hashPass },
+    {
+      new: true,
+    }
+  );
+
+  setTimeout(
+    async () =>
+      User.findOneAndUpdate(
+        { username: req.body.username },
+        { password: null },
+        {
+          new: true,
+        }
+      ),
+    30000
+  );
+
   res.render("auth/authentication", {
     Username: req.body.username,
     isSignin: ifUserCameFromSignin,
@@ -66,18 +90,6 @@ router.post("/signup", async (req, res, next) => {
         });
       }
     });
-
-    setTimeout(
-      async () =>
-        User.findOneAndUpdate(
-          { username },
-          { throwaway: null },
-          {
-            new: true,
-          }
-        ),
-      60000
-    );
   });
 });
 
@@ -98,10 +110,17 @@ router.post("/signin", (req, res, next) => {
         isSignin: true,
       });
     }
-    req.logIn(user, function (err) {
+    req.logIn(user, async (err) => {
       if (err) {
         return next(err);
       }
+      await User.findOneAndUpdate(
+        { username: user.username },
+        { password: null },
+        {
+          new: true,
+        }
+      );
       return res.redirect("/reviews");
     });
   })(req, res, next);
