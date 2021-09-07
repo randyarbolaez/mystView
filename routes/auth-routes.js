@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-
-const User = require("../models/user-schema");
-const UserCode = require("../util/user-code");
-
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
 const passport = require("passport");
+const nodemailer = require("nodemailer");
+
+const User = require("../models/user-schema");
+const UserCode = require("../util/user-code");
 
 router.get("/signup", (req, res, next) => {
   res.render("auth/authentication", { User: req.user, isSignin: false });
@@ -19,12 +19,34 @@ router.post("/send-email", async (req, res, next) => {
       ? true
       : false;
 
-  let password = "123456";
+  let password = (await UserCode()).toString();
   const salt = bcrypt.genSaltSync(bcryptSalt);
   const hashPass = bcrypt.hashSync(password, salt);
 
+  var transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD,
+    },
+  });
+  var mailOptions = {
+    from: process.env.EMAIL,
+    to: req.body.email,
+    subject: "Sending Email using Node.js",
+    text: `your password is ${password}!`,
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
+
   await User.findOneAndUpdate(
-    { username: req.body.username },
+    { email: req.body.email },
     { password: hashPass },
     {
       new: true,
@@ -34,35 +56,35 @@ router.post("/send-email", async (req, res, next) => {
   setTimeout(
     async () =>
       User.findOneAndUpdate(
-        { username: req.body.username },
+        { email: req.body.email },
         { password: null },
         {
           new: true,
         }
       ),
-    30000
+    30000 // change this to 15 mins
   );
 
   res.render("auth/authentication", {
-    Username: req.body.username,
+    Email: req.body.email,
     isSignin: ifUserCameFromSignin,
   });
 });
 
 router.post("/signup", async (req, res, next) => {
-  const username = req.body.username.toLowerCase();
+  const email = req.body.email.toLowerCase();
   const password = req.body.password;
   const code = await UserCode();
   const throwaway = await UserCode();
-  if (username === "" || password === "") {
+  if (email === "" || password === "") {
     res.render("auth/authentication", { isSignin: false });
     return;
   }
-  User.findOne({ username: username }, "username", (err, user) => {
+  User.findOne({ email: email }, "email", (err, user) => {
     if (user !== null) {
       res.render("auth/authentication", {
-        ErrorText: "Username is taken",
-        Username: username,
+        ErrorText: "email is taken",
+        Email: email,
         isSignin: false,
       });
       return;
@@ -72,7 +94,7 @@ router.post("/signup", async (req, res, next) => {
     const hashPass = bcrypt.hashSync(password, salt);
 
     const newUser = User({
-      username,
+      email,
       password: hashPass,
       code,
       throwaway,
@@ -106,7 +128,7 @@ router.post("/signin", (req, res, next) => {
       console.log(info);
       return res.render("auth/authentication", {
         ErrorText: info.message,
-        Username: req.body.username,
+        Email: req.body.email,
         isSignin: true,
       });
     }
@@ -115,7 +137,7 @@ router.post("/signin", (req, res, next) => {
         return next(err);
       }
       await User.findOneAndUpdate(
-        { username: user.username },
+        { email: user.email },
         { password: null },
         {
           new: true,

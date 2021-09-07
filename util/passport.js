@@ -21,11 +21,12 @@ module.exports = function (passport) {
     new LocalStrategy(
       {
         passReqToCallback: true,
+        usernameField: "email",
       },
-      (req, username, password, next) => {
+      (req, email, password, next) => {
         User.findOne(
           {
-            username: username.toLowerCase(),
+            email: email.toLowerCase(),
           },
           (err, user) => {
             if (err) {
@@ -33,7 +34,7 @@ module.exports = function (passport) {
             }
             if (!user) {
               return next(null, false, {
-                message: "Incorrect username",
+                message: "Incorrect email",
               });
             }
             if (!bcrypt.compareSync(password, user.password)) {
