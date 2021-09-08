@@ -29,6 +29,8 @@ module.exports = function (passport) {
             email: email.toLowerCase(),
           },
           (err, user) => {
+            let userPassword = user.password == null ? "" : user.password;
+            console.log({ password, user: user.password });
             if (err) {
               return next(err);
             }
@@ -37,7 +39,7 @@ module.exports = function (passport) {
                 message: "Incorrect email",
               });
             }
-            if (!bcrypt.compareSync(password, user.password)) {
+            if (!bcrypt.compareSync(password, userPassword)) {
               return next(null, false, {
                 message: "Incorrect password",
               });

@@ -18,19 +18,16 @@ router.post("/send-email", async (req, res, next) => {
     "signin"
       ? true
       : false;
+  const password = (await UserCode()).toString();
 
-  let password = (await UserCode()).toString();
-  const salt = bcrypt.genSaltSync(bcryptSalt);
-  const hashPass = bcrypt.hashSync(password, salt);
-
-  var transporter = nodemailer.createTransport({
+  let transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
       user: process.env.EMAIL,
       pass: process.env.PASSWORD,
     },
   });
-  var mailOptions = {
+  let mailOptions = {
     from: process.env.EMAIL,
     to: req.body.email,
     subject: "Sending Email using Node.js",
@@ -44,6 +41,9 @@ router.post("/send-email", async (req, res, next) => {
       console.log("Email sent: " + info.response);
     }
   });
+
+  const salt = bcrypt.genSaltSync(bcryptSalt);
+  const hashPass = bcrypt.hashSync(password, salt);
 
   await User.findOneAndUpdate(
     { email: req.body.email },
