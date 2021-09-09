@@ -135,6 +135,34 @@ router.post("/send-email", async (req, res, next) => {
           console.log("error");
           res.render("auth/authentication", { isSignin: false });
         } else {
+          setTimeout(async () => {
+            await User.findOne({ email: email }, (err, doc) => {
+              let isUserSignedIn = doc.signedIn;
+              if (!isUserSignedIn) {
+                User.deleteOne({ email: email }, (err) => {
+                  if (err) {
+                    console.log("User couldn't be removed");
+                  } else {
+                    console.log("User was removed successfully");
+                  }
+                });
+              }
+            });
+
+            if (true) {
+              // User.findOneAndRemove(
+              //   { email: email },
+              //   { new: true },
+              //   (err, doc) => {
+              //     if (err) {
+              //       console.log(err);
+              //     } else {
+              //       console.log("User removed: ", doc);
+              //     }
+              //   }
+              // );
+            }
+          }, 20000);
           return setTimeout(
             () =>
               res.render("auth/authentication", {
@@ -166,39 +194,39 @@ router.post("/send-email", async (req, res, next) => {
   });
 });
 
-router.post("/signup", async (req, res, next) => {
-  if (email === "" || password === "") {
-    res.render("auth/authentication", {
-      message: "Add details",
-      isSignin: false,
-    });
-    return;
-  }
-  User.findOne({ email: email }, "email", (err, user) => {
-    if (user !== null) {
-      res.render("auth/authentication", {
-        ErrorText: "Email is taken",
-        Email: email,
-        isSignin: false,
-      });
-      return;
-    }
+// router.post("/signup", async (req, res, next) => {
+//   if (email === "" || password === "") {
+//     res.render("auth/authentication", {
+//       message: "Add details",
+//       isSignin: false,
+//     });
+//     return;
+//   }
+//   User.findOne({ email: email }, "email", (err, user) => {
+//     if (user !== null) {
+//       res.render("auth/authentication", {
+//         ErrorText: "Email is taken",
+//         Email: email,
+//         isSignin: false,
+//       });
+//       return;
+//     }
 
-    const newUser = User({
-      email: req.body.email.toLowerCase(),
-      password: hashPass,
-      // code: await UserCode(),
-    });
+//     const newUser = User({
+//       email: req.body.email.toLowerCase(),
+//       password: hashPass,
+//       // code: await UserCode(),
+//     });
 
-    newUser.save((err) => {
-      if (err) {
-        res.render("auth/authentication", { isSignin: false });
-      } else {
-        setTimeout(() => res.redirect("/signin"), 10000);
-      }
-    });
-  });
-});
+//     newUser.save((err) => {
+//       if (err) {
+//         res.render("auth/authentication", { isSignin: false });
+//       } else {
+//         setTimeout(() => res.redirect("/signin"), 10000);
+//       }
+//     });
+//   });
+// });
 // router.post("/signup", async (req, res, next) => {
 //   const email = req.body.email.toLowerCase();
 //   const password = req.body.password;
@@ -268,7 +296,7 @@ router.post("/signin", (req, res, next) => {
       }
       await User.findOneAndUpdate(
         { email: user.email },
-        { password: null },
+        { password: null, signedIn: true },
         {
           new: true,
         }
