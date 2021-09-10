@@ -32,11 +32,15 @@
                     <form method="POST" action="/signin" class="container-form">
                         <h1>Sign In</h1>
                 {{else}}
-                    <form action="/signup" method="POST" class="container-form">
+                    <form method="POST" action="/signup" class="container-form">
                         <h1>Sign Up</h1>
                 {{/if}}
                         {{#if ErrorText}}
-                            <span class="error-wrong-code">{{ErrorText}}</span>
+                                <span class="error-wrong-code">{{ErrorText}}</span>
+                            {{else}}
+                                {{#if blah}}
+                                    <p style="word-break: break-all;" class="info-code">Email contains password.</p>
+                                {{/if}}
                         {{/if}}
                         <div>
                             <input type="email" name="email" placeholder="enter your email" class="container-form-input"

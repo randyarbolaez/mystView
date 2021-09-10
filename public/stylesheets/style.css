@@ -150,6 +150,12 @@ a:hover {
 }
 /* ERROR CSS */
 
+/* INFO CSS */
+.info-code {
+  color:#588B8B;
+}
+/* ERROR CSS */
+
 /* HELP ICON */
 .help-icon {
   display: block;
