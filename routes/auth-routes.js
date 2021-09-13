@@ -13,6 +13,7 @@ router.get("/signup", (req, res, next) => {
 });
 
 router.post("/send-email", async (req, res, next) => {
+  let email = req.body.email;
   let ifUserCameFromSignin =
     req.headers.referer.split("/")[req.headers.referer.split("/").length - 1] ==
     "signin"
@@ -29,7 +30,7 @@ router.post("/send-email", async (req, res, next) => {
   });
   let mailOptions = {
     from: process.env.EMAIL,
-    to: req.body.email,
+    to: email,
     subject: "Sending Email using Node.js",
     text: `your password is ${password}!`,
   };
@@ -45,17 +46,20 @@ router.post("/send-email", async (req, res, next) => {
   const salt = bcrypt.genSaltSync(bcryptSalt);
   const hashPass = bcrypt.hashSync(password, salt);
 
-  if (ifUserCameFromSignin) {
+  let user = await User.findOne({ email }, "email", async (err, user) => user);
+  console.log("USER /: ", user);
+
+  if (ifUserCameFromSignin || user) {
     await User.findOneAndUpdate(
-      { email: req.body.email },
+      { email },
       { password: hashPass },
       {
         new: true,
       }
     );
   } else {
-    let email = req.body.email.toLowerCase();
-    return User.findOne({ email: email }, "email", async (err, user) => {
+    // let email = email.toLowerCase();
+    return User.findOne({ email }, "email", async (err, user) => {
       const newUser = User({
         email,
         password: hashPass,
@@ -64,6 +68,7 @@ router.post("/send-email", async (req, res, next) => {
 
       newUser.save((err) => {
         if (err) {
+          console.log("error: ", err);
           res.render("auth/authentication", { isSignin: false });
         } else {
           setTimeout(async () => {
@@ -80,15 +85,14 @@ router.post("/send-email", async (req, res, next) => {
               }
             });
           }, 20000);
-          return setTimeout(
-            () =>
-              res.render("auth/authentication", {
-                Email: req.body.email,
-                isSignin: true,
-                blah: true,
-              }),
-            3000
-          );
+          return setTimeout(() => {
+            console.log("rediret");
+            res.render("auth/authentication", {
+              Email: email,
+              isSignin: true,
+              blah: true,
+            });
+          }, 3000);
         }
       });
     });
@@ -97,7 +101,7 @@ router.post("/send-email", async (req, res, next) => {
   setTimeout(
     async () =>
       User.findOneAndUpdate(
-        { email: req.body.email },
+        { email },
         { password: null },
         {
           new: true,
@@ -107,7 +111,7 @@ router.post("/send-email", async (req, res, next) => {
   );
 
   res.render("auth/authentication", {
-    Email: req.body.email,
+    Email: email,
     isSignin: true,
     blah: true,
   });
