@@ -58,7 +58,6 @@ router.post("/send-email", async (req, res, next) => {
       }
     );
   } else {
-    // let email = email.toLowerCase();
     return User.findOne({ email }, "email", async (err, user) => {
       const newUser = User({
         email,
@@ -84,7 +83,7 @@ router.post("/send-email", async (req, res, next) => {
                 });
               }
             });
-          }, 20000);
+          }, 900000);
           return setTimeout(() => {
             console.log("rediret");
             res.render("auth/authentication", {
@@ -92,7 +91,7 @@ router.post("/send-email", async (req, res, next) => {
               isSignin: true,
               blah: true,
             });
-          }, 3000);
+          }, 2000);
         }
       });
     });
@@ -107,7 +106,7 @@ router.post("/send-email", async (req, res, next) => {
           new: true,
         }
       ),
-    30000 // change this to 15 mins
+    900000 // change this to 15 mins
   );
 
   res.render("auth/authentication", {
