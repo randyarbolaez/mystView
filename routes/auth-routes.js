@@ -28,11 +28,26 @@ router.post("/send-email", async (req, res, next) => {
       pass: process.env.PASSWORD,
     },
   });
+
+  let signinText = `
+  Hi ${email.split("@")[0]},
+
+  Your password is: ${password}
+
+  If you do not sign in within 15 minutes the password will reset and you will have to request a new password.
+
+  Best,
+  MystView
+  
+  `;
+
+  let text = ifUserCameFromSignin ? signinText : `signup ${password}`;
+
   let mailOptions = {
     from: process.env.EMAIL,
     to: email,
-    subject: "Sending Email using Node.js",
-    text: `your password is ${password}!`,
+    subject: "MystView Password",
+    text,
   };
 
   transporter.sendMail(mailOptions, function (error, info) {
