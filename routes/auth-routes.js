@@ -41,7 +41,20 @@ router.post("/send-email", async (req, res, next) => {
   
   `;
 
-  let text = ifUserCameFromSignin ? signinText : `signup ${password}`;
+  let signupText = `
+  Hi ${email.split("@")[0]},
+
+  Thank you for signing up! 
+
+  Your password is: ${password}
+
+  If you do not sign in within 15 minutes the password will reset and you will have to request a new password. 
+
+  Best,
+  MystView
+  `;
+
+  let text = ifUserCameFromSignin ? signinText : signupText;
 
   let mailOptions = {
     from: process.env.EMAIL,
