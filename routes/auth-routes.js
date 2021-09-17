@@ -80,7 +80,7 @@ router.post("/send-email", async (req, res, next) => {
   if (ifUserCameFromSignin || user) {
     await User.findOneAndUpdate(
       { email },
-      { password: hashPass },
+      { password: hashPass, timeThatPasswordIsSet: Date.now() },
       {
         new: true,
       }
@@ -98,26 +98,11 @@ router.post("/send-email", async (req, res, next) => {
           console.log("error: ", err);
           res.render("auth/authentication", { isSignin: false });
         } else {
-          setTimeout(async () => {
-            await User.findOne({ email: email }, (err, doc) => {
-              let isUserSignedIn = doc.signedIn;
-              if (!isUserSignedIn) {
-                User.deleteOne({ email: email }, (err) => {
-                  if (err) {
-                    console.log("User couldn't be removed");
-                  } else {
-                    console.log("User was removed successfully");
-                  }
-                });
-              }
-            });
-          }, 900000);
           return setTimeout(() => {
-            console.log("rediret");
             res.render("auth/authentication", {
               Email: email,
               isSignin: true,
-              blah: true,
+              PasswordInfo: true,
             });
           }, 2000);
         }
@@ -125,22 +110,10 @@ router.post("/send-email", async (req, res, next) => {
     });
   }
 
-  setTimeout(
-    async () =>
-      User.findOneAndUpdate(
-        { email },
-        { password: null },
-        {
-          new: true,
-        }
-      ),
-    900000 // change this to 15 mins
-  );
-
   res.render("auth/authentication", {
     Email: email,
     isSignin: true,
-    blah: true,
+    PasswordInfo: true,
   });
 });
 
@@ -152,14 +125,37 @@ router.get("/signin", (req, res, next) => {
 });
 
 router.post("/signin", (req, res, next) => {
-  passport.authenticate("local", (err, user, info) => {
+  passport.authenticate("local", async (err, user, info) => {
+    let differenceInMs = Math.abs(
+      new Date(Date.now()) - new Date(user.timeThatPasswordIsSet)
+    );
     if (err) {
       return next(err);
     }
-    if (!user) {
-      console.log(info);
+    if (differenceInMs > 900000) {
+      if (!user.signedIn) {
+        await User.deleteOne({ email: user.email }, (err) => {
+          if (err) {
+            console.log("User couldn't be removed");
+          } else {
+            console.log("User was removed successfully");
+          }
+        });
+        return res.render("auth/authentication", {
+          ErrorText: "Took too long to signup.",
+          Email: req.body.email,
+          isSignin: true,
+        });
+      }
+      await User.findOneAndUpdate(
+        { email: user.email },
+        { password: null },
+        {
+          new: true,
+        }
+      );
       return res.render("auth/authentication", {
-        ErrorText: info.message,
+        ErrorText: "Password expired",
         Email: req.body.email,
         isSignin: true,
       });

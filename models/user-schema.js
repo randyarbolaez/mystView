@@ -7,6 +7,7 @@ const userSchema = new Schema(
     password: { type: String, required: true },
     code: { type: String, unique: true },
     signedIn: { type: Boolean, require: true, default: false },
+    timeThatPasswordIsSet: { type: Date, require: true, default: Date },
   },
   {
     timestamps: {
