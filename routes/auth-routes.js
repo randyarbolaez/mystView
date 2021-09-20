@@ -59,7 +59,9 @@ router.post("/send-email", async (req, res, next) => {
   let mailOptions = {
     from: process.env.EMAIL,
     to: email,
-    subject: "MystView Password",
+    subject: `MystView | ${
+      ifUserCameFromSignin ? "Signin" : "Signup"
+    } Password`,
     text,
   };
 
@@ -75,7 +77,6 @@ router.post("/send-email", async (req, res, next) => {
   const hashPass = bcrypt.hashSync(password, salt);
 
   let user = await User.findOne({ email }, "email", async (err, user) => user);
-  console.log("USER /: ", user);
 
   if (ifUserCameFromSignin || user) {
     await User.findOneAndUpdate(
