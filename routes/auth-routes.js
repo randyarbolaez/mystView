@@ -48,7 +48,7 @@ router.post("/send-email", async (req, res, next) => {
 
   Your password is: ${password}
 
-  If you do not sign in within 15 minutes the password will reset and you will have to request a new password. 
+  If you do not sign up within 15 minutes the account will be deleted and you will have to sign up again. 
 
   Best,
   MystView
