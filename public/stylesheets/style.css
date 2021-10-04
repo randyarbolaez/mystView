@@ -167,7 +167,7 @@ a:hover {
 }
 
 .help-icon:hover {
-  cursor: default;
+  cursor: pointer;
 }
 
 .hide {
