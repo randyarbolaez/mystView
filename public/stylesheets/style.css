@@ -17,7 +17,7 @@ a:hover {
 }
 
 .container-nav {
-  background-color: #fec8d8;
+  background: linear-gradient(180deg, #fec8d8 0%, transparent 100%);
   color: #b4bad4;
 }
 
