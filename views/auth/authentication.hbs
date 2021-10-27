@@ -65,6 +65,10 @@
                 {{/if}}
                     <input type="email" name="email" placeholder="enter your email" class="container-form-input"
                         required="required" value={{Email}}>
+                        {{#if isSignin}}
+                        {{else}}
+                            <span title="Please enter real email, you will be receiving your password. :)" style="color:#fc6491;">ⓘ</span>
+                        {{/if}}
                     <div>
                         <input type="submit" value="Submit!" class="container-form-button">
                     </div>
