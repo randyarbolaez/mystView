@@ -59,7 +59,7 @@ router.post("/send-email", async (req, res, next) => {
   let mailOptions = {
     from: process.env.EMAIL,
     to: email,
-    subject: `MystView | ${
+    subject: `MystView Password | ${
       ifUserCameFromSignin ? "Signin" : "Signup"
     } Password`,
     text,
